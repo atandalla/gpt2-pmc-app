@@ -1,0 +1,13 @@
+simplejson
+markupsafe==2.0.1
+Flask==1.1.4
+Flask-RESTful==0.3.7
+requests
+nltk
+transformers
+sklearn
+stopwords
+torch
+
+
+simplejson flask flask-restful transformers pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 cpuonly -c pytorch
