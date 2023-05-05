@@ -1,0 +1,299 @@
+<%- include ('../partials/header.ejs') %>
+    <%- include ('../partials/navigation.ejs') %>
+
+        <style>
+            @media screen and (max-width: 768px) {
+                .card-img-main {
+                    display: none;
+                }
+
+                .card-main {
+                    margin-top: 1rem;
+                }
+
+                .card-title {
+                    color: black;
+                    padding-top: 0.5rem;
+                    font-size: 6px;
+                }
+
+                .title-css {
+                    font-size: 16px;
+                }
+
+                .author-css {
+                    font-size: 13px;
+                }
+
+                .button-css {
+                    width: 100%;
+                    margin-top: 7px;
+                }
+            }
+        </style>
+        <section id="contact" class="contact section-bg">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>Search</h2>
+                    <p>Showing results for
+                        <%= titlesearchindex %> (2,854,029 articles found)
+                    </p>
+                </div>
+
+                <div class="subscribe">
+                    <form action="/" role="form" method="POST" data-aos="fade-up">
+                        <div class="subscribe-form">
+                            <input type="text" name="nameSearch" style="border: 0;"
+                                placeholder="Search 205+ million papers around the world" class="form-control"><input
+                                type="submit" value="SEARCH">
+                        </div>
+
+                    </form>
+                </div>
+                <div class="row mt-3">
+
+                    <div class="col-lg-12 mt-5 mt-lg-0">
+
+                        <%if (jsd.length> 0) {%>
+                            <% for(var i=0; i < jsd.length; i++) { %>
+
+                                <div class="php-email-form d-flex flex-sm-row-reverse mt-3">
+                                    <div class="container">
+                                        <div class="row justify-content-center">
+                                            <div class="col-6 col-md-3 card-img-main">
+                                                <blockquote class="blockquote mb-0 ">
+                                                    <div class="card text-white"
+                                                        style="border: none; background-color: transparent;">
+                                                        <img class="card-img img-responsive card-img-secondary rounded border"
+                                                            src="/assets/img/carta2.jpeg" alt="Card image"
+                                                            style="width: 10rem;">
+                                                        <div class="card-img-overlay justify-content-center">
+                                                            <h6 class="card-title"
+                                                                style="color: rgb(37, 37, 37); padding-top: 0.2rem; font-size: 11px; overflow: hidden; font-family: 'Times New Roman', Times, serif; width: 8rem;">
+                                                                <%= jsd[i].title %>
+
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </blockquote>
+
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-9 card-main">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5 style="color:rgb(5, 77, 145)" class="title-css">
+                                                            <%= jsd[i].title %>
+                                                        </h5>
+                                                        <blockquote class="blockquote mb-0">
+                                                            <h5 style="color:rgb(0, 0, 0); font-size: 15px;"
+                                                                class="author-css">By
+                                                                <a href="" style="color:rgb(4, 106, 201)"
+                                                                    class="author-css">
+                                                                    <%= jsd[i].author %>
+                                                                </a>
+                                                            </h5>
+                                                            <button class="accordion-button collapsed text-left"
+                                                                type="button" data-toggle="collapse"
+                                                                data-target="#ab<%=jsd[i].id %>" aria-expanded="false"
+                                                                aria-controls="ab<%=jsd[i].id %>" style="border: none;">
+                                                                <h6 style="color:rgb(36, 36, 36);font-size: 13px;">
+                                                                    <%= jsd[i].abstract.substring(0,400) %>
+
+                                                                        <div id="ab<%=jsd[i].id %>"
+                                                                            class="accordion-collapse collapse"
+                                                                            aria-labelledby="flush-headingOne">
+                                                                            <div class="accordion-body">
+                                                                                <%= jsd[i].abstract.substring(400,) %>
+                                                                            </div>
+                                                                        </div>
+
+                                                                </h6>
+                                                            </button>
+                                                            <footer class="blockquote">
+                                                                <a class="btn button-css" type="button"
+                                                                    style="color: #fff; background-color: #b85b04;"
+                                                                    href="<%= jsd[i].url %>">Get PDF</a>
+                                                                <form action="/ajax" method="POST"
+                                                                    style="display:inline;">
+                                                                    <a type="button" name="bSubmit" disabled="false"
+                                                                        onclick="getId('<%= jsd[i].title %>')"
+                                                                        class="btn text-white bg-info button-css"
+                                                                        data-toggle="collapse"
+                                                                        data-target="#a<%=jsd[i].id %>"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="a<%=jsd[i].id %>">Similar
+                                                                        articles</a>
+                                                                </form>
+                                                                <form action="/gptView" method="POST"
+                                                                    style="display:inline;">
+                                                                    <button type="submit"
+                                                                        class="btn text-white bg-danger button-css">GPT2</button>
+                                                                    <input type="hidden" name="titlegpt2"
+                                                                        value="<%= jsd[i].title %>">
+                                                                    <input type="hidden" name="abstractgpt2"
+                                                                        value="<%= jsd[i].abstract %>">
+                                                                </form>
+                                                                <div class="collapse" id="a<%=jsd[i].id %>">
+                                                                    <div class="mt-4 card <%= jsd[i].title %> "
+                                                                        style="background-color: transparent; display: none; border: none;">
+
+                                                                        <div class="text-center">
+                                                                            <div>
+                                                                                <h6>Loading suggested articles...</h6>
+                                                                            </div>
+
+                                                                            <div class="spinner-border text-success"
+                                                                                role="status">
+
+                                                                                <span class="visually-hidden"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="jumbotron-fluid listaSimilitud"
+                                                                        id="<%= jsd[i].title %>"
+                                                                        style="background-color: transparent;  display: none;">
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </footer>
+                                                        </blockquote>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="modal<%=jsd[i].id %>" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header d-block ">
+                                                <h5 class="modal-title text-center" id="exampleModalLongTitle"
+                                                    style="text-align:center;">GPT - 2</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <%= jsd[i].abstract %>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <% } %>
+
+                                    <%} else{%>
+                                        <div class="php-email-form d-flex flex-sm-row-reverse mt-3">
+                                            <div class="container">
+                                                <div class="row justify-content-center">
+                                                    <div class="alert alert-success" role="alert">
+                                                        <h4 class="alert-heading">Opps! your search has failed</h4>
+                                                        <p>We regret to inform you that no articles related to your
+                                                            search have been found, if you continue having problems,
+                                                            contact us.</p>
+                                                        <hr>
+                                                        <p class="mb-0">Keep looking for another topic of interest.</p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <% } %>
+
+                                            <div class="row mt-5">
+                                                <% if(pages> 0) { %>
+                                                    <nav class="mx-auto ">
+                                                        <ul class="pagination ">
+                                                            <% if(current==1) { %>
+                                                                <li class="page-item disabled ">
+                                                                    <a class="page-link" href="#">First</a>
+                                                                </li>
+                                                                <% } else { %>
+                                                                    <li class="page-item">
+                                                                        <a class="page-link" href="/books/1">First</a>
+                                                                    </li>
+                                                                    <% } %>
+                                                                        <% var i=(Number(current)> 5 ? Number(current) -
+                                                                            4 : 1) %>
+                                                                            <% if(i !==1) { %>
+                                                                                <li class="page-item disabled">
+                                                                                    <a class="page-link"
+                                                                                        href="#">...</a>
+                                                                                </li>
+                                                                                <% } %>
+                                                                                    <% for(; i <=(Number(current) + 4)
+                                                                                        && i <=pages; i++) { %>
+                                                                                        <% if(i==current) { %>
+                                                                                            <li
+                                                                                                class="page-item active">
+                                                                                                <a class="page-link"
+                                                                                                    href="<%= i %>">
+                                                                                                    <%= i %>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <% } else { %>
+                                                                                                <li class="page-item">
+                                                                                                    <a class="page-link"
+                                                                                                        href="/books/<%= i %>">
+                                                                                                        <%= i %>
+                                                                                                    </a>
+                                                                                                </li>
+                                                                                                <% } %>
+                                                                                                    <% if
+                                                                                                        (i==Number(current)
+                                                                                                        + 4 && i <
+                                                                                                        pages) { %>
+                                                                                                        <li
+                                                                                                            class="page-item disabled">
+                                                                                                            <a class="page-link"
+                                                                                                                href="#">...</a>
+                                                                                                        </li>
+                                                                                                        <% } %>
+                                                                                                            <% } %>
+                                                                                                                <% if(current==pages)
+                                                                                                                    { %>
+                                                                                                                    <li
+                                                                                                                        class="page-item disabled">
+                                                                                                                        <a class="page-link"
+                                                                                                                            href="#">
+                                                                                                                            Last
+                                                                                                                        </a>
+                                                                                                                    </li>
+                                                                                                                    <% } else
+                                                                                                                        {
+                                                                                                                        %>
+                                                                                                                        <li
+                                                                                                                            class="page-item">
+                                                                                                                            <a class="page-link"
+                                                                                                                                href="/books/<%= pages %>">
+                                                                                                                                Last
+                                                                                                                            </a>
+                                                                                                                        </li>
+                                                                                                                        <% }
+                                                                                                                            %>
+                                                        </ul>
+                                                    </nav>
+                                                    <% } %>
+                                            </div>
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <%- include ('../partials/footer.ejs') %>

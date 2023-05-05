@@ -1,0 +1,51 @@
+﻿<%- include ('partials/header.ejs') %>
+
+    <style>
+        #dolfin {
+            font-size: 50px;
+        }
+        
+        #dolfin-img {
+            width: 150px;
+        }
+        
+        @media (max-width: 768px) {
+            #dolfin {
+                font-size: 28px;
+            }
+            #dolfin-img {
+                width: 160px;
+            }
+        }
+    </style>
+
+    <section id="hero">
+
+        <div class="hero-container ">
+            <a href="/" class="hero-logo" data-aos="zoom-in"><img src="/assets/img/dolfin-main.png" alt="" id="dolfin-img"></a>
+
+            <h1 data-aos="zoom-in">Welcome To <span id="dolfin" style="color:#f2da5b; ">Dolfin Go</span></h1>
+
+            <h4 data-aos="fade-up" style="color: rgb(136, 136, 136);">The world’s largest collection of open access research papers</h4>
+            <div class="subscribe">
+                <h5 style="color: transparent; height: 0rem; ">The world’s largest collection of open access research papers</h5>
+                <form action="/" role="form" method="POST" data-aos="fade-up">
+                    <div class="subscribe-form">
+                        <input type="text" name="nameSearch" style="border: 0;" placeholder="Search 200+ million papers around the world" class="form-control" required><input type="submit" value="SEARCH" id="search">
+                    </div>
+                    <div class="mt-2">
+                        <div class="loading">Loading</div>
+                        <div class="error-message"></div>
+                        <div class="sent-message">Your notification request was sent. Thank you!</div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="mt-4">
+                <h2 data-aos="fade-up" style="color: white; font-family: Georgia, 'Times New Roman', Times, serif;">Discover and find <span class="typed" style="color: #7dc976; font-family: Georgia, 'Times New Roman', Times, serif; font-size: 13.9px; font-weight: bold;" data-typed-items="all kinds of papers, articles, recommendations, everything for you"></span></h2>
+            </div>
+
+        </div>
+    </section>
+
+        <%- include ('partials/footer.ejs') %>
